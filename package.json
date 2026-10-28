@@ -3,15 +3,15 @@
   "version": "1.0.0",
   "private": true,
   "description": "A private, offline text expander for Chrome. The extension lives in ./flashkey and needs no build step; this file only holds the dev tooling.",
-  "author": "Elliot <legendsidleon1@gmail.com> (https://github.com/adultgamer123)",
+  "author": "Elliot <legendsidleon1@gmail.com> (https://github.com/elliotlucid090806)",
   "license": "MIT",
-  "homepage": "https://github.com/adultgamer123/Flashkey#readme",
+  "homepage": "https://github.com/elliotlucid090806/Flashkey#readme",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/adultgamer123/Flashkey.git"
+    "url": "git+https://github.com/elliotlucid090806/Flashkey.git"
   },
   "bugs": {
-    "url": "https://github.com/adultgamer123/Flashkey/issues"
+    "url": "https://github.com/elliotlucid090806/Flashkey/issues"
   },
   "engines": {
     "node": ">=18"

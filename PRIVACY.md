@@ -50,4 +50,4 @@ If this policy ever changes, the new version will be published in this repositor
 
 ## Contact
 
-Questions? Open an issue at <https://github.com/adultgamer123/Flashkey/issues>.
+Questions? Open an issue at <https://github.com/elliotlucid090806/Flashkey/issues>.

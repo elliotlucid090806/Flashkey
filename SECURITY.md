@@ -12,7 +12,7 @@ FlashKey runs on every page you type in, so security matters more than features.
 
 **Please don't open a public issue.** Report it privately instead:
 
-1. **Preferred:** [open a private security advisory](https://github.com/adultgamer123/Flashkey/security/advisories/new) on GitHub.
+1. **Preferred:** [open a private security advisory](https://github.com/elliotlucid090806/Flashkey/security/advisories/new) on GitHub.
 2. **Or email** legendsidleon1@gmail.com with the subject line `FlashKey security`.
 
 Please include the browser version, the website (if one is involved) and the steps to reproduce. You'll get a reply within 72 hours. Fixes for confirmed issues ship as soon as possible, and you'll be credited in the release notes unless you'd rather not be.

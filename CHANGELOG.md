@@ -17,4 +17,4 @@ First public release.
 - Guardrails for password, one-time-code and payment fields, and a per-site blocklist with wildcards.
 - Light, Dark and System themes.
 
-[1.0.0]: https://github.com/adultgamer123/Flashkey/commits/main
+[1.0.0]: https://github.com/elliotlucid090806/Flashkey/commits/main

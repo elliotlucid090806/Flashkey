@@ -10,7 +10,7 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/adultgamer123/Flashkey/actions/workflows/ci.yml"><img alt="CI" src="https://github.com/adultgamer123/Flashkey/actions/workflows/ci.yml/badge.svg"></a>
+  <a href="https://github.com/elliotlucid090806/Flashkey/actions/workflows/ci.yml"><img alt="CI" src="https://github.com/elliotlucid090806/Flashkey/actions/workflows/ci.yml/badge.svg"></a>
   <img alt="Chrome Manifest V3" src="https://img.shields.io/badge/Chrome-Manifest%20V3-1a1c22?logo=googlechrome&logoColor=ffc53d">
   <img alt="74 tests" src="https://img.shields.io/badge/tests-74-2ea44f">
   <img alt="Package size 85 KB" src="https://img.shields.io/badge/package-85%20KB-f59e0b">
@@ -222,7 +222,7 @@ flowchart LR
 **From source** (about a minute):
 
 ```bash
-git clone https://github.com/adultgamer123/Flashkey.git
+git clone https://github.com/elliotlucid090806/Flashkey.git
 ```
 
 1. Open `chrome://extensions` (or `brave://extensions`, `edge://extensions`) and turn on **Developer mode**.
@@ -248,7 +248,7 @@ Not automatically, by design. Everything stays on your computer. To move them, u
 <details>
 <summary><b>A trigger doesn't expand on one website. What can I do?</b></summary>
 <br>
-Check that the site isn't paused (open the toolbar popup) or on your exclusion list. Password and one-time-code fields are skipped on purpose. If it still doesn't work, please <a href="https://github.com/adultgamer123/Flashkey/issues/new/choose">open an issue</a> with the website and the steps. A made-up example snippet is perfect.
+Check that the site isn't paused (open the toolbar popup) or on your exclusion list. Password and one-time-code fields are skipped on purpose. If it still doesn't work, please <a href="https://github.com/elliotlucid090806/Flashkey/issues/new/choose">open an issue</a> with the website and the steps. A made-up example snippet is perfect.
 </details>
 
 <details>
@@ -323,7 +323,7 @@ Bug reports, ideas and pull requests are welcome. Please read [CONTRIBUTING.md](
 
 ## Author
 
-**Elliot** · [GitHub @adultgamer123](https://github.com/adultgamer123) · legendsidleon1@gmail.com
+**Elliot** · [GitHub @elliotlucid090806](https://github.com/elliotlucid090806) · legendsidleon1@gmail.com
 
 I built FlashKey because I wanted a text expander that's fast, works everywhere I type, and never sends my words anywhere. If it saves you time, a ⭐ on the repo is the nicest way to say thanks.
 

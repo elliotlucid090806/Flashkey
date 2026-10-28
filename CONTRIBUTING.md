@@ -15,7 +15,7 @@ FlashKey's promise is **fast, private and quiet**, so every change has to keep i
 ## Getting set up
 
 ```bash
-git clone https://github.com/adultgamer123/Flashkey.git
+git clone https://github.com/elliotlucid090806/Flashkey.git
 cd Flashkey
 npm install
 npx playwright install chromium
