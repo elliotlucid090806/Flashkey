@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><link rel="icon" href="data:,"><title>FlashKey fixture — native fields</title>
+<style>body{font:14px sans-serif;margin:20px} input,textarea,[contenteditable]{display:block;margin:6px 0;width:420px;padding:4px;border:1px solid #999;min-height:22px} textarea{height:80px}</style></head>
+<body>
+<h1>Native fields</h1>
+<input id="text" type="text">
+<textarea id="ta"></textarea>
+<input id="search" type="search">
+<input id="email" type="email">
+<div id="ce" contenteditable="true"></div>
+<div id="ce-rich" contenteditable="true"><p>Hello <b>world</b> </p></div>
+
+<h2>Must never expand</h2>
+<input id="pw" type="password">
+<input id="otp" autocomplete="one-time-code">
+<input id="otp2" name="otp_code">
+<input id="mfa" name="mfaCode">
+<input id="cc" autocomplete="cc-number">
+<input id="pin6" inputmode="numeric" maxlength="6">
+<input id="cvv" name="card_cvv">
+<textarea id="off" data-flashkey="off"></textarea>
+<input id="ro" readonly value="">
+
+<h2>Form for {tab}</h2>
+<form id="form" onsubmit="window.formSubmits=(window.formSubmits||0)+1;return false">
+  <input id="f1"><input id="f2">
+  <select id="f3"><option value="">--</option><option value="us">United States</option><option value="in">India</option></select>
+  <input id="f4">
+</form>
+
+<h2>Web component (open shadow DOM)</h2>
+<fk-field id="shadowhost"></fk-field>
+<script>
+customElements.define('fk-field', class extends HTMLElement {
+  constructor() { super(); const r = this.attachShadow({ mode: 'open' }); r.innerHTML = '<input id="inner" style="width:300px"><div id="innerce" contenteditable="true" style="border:1px solid #999;min-height:20px"></div>'; }
+});
+</script>
+
+<h2>Iframes</h2>
+<iframe id="srcdoc" style="width:460px;height:120px" srcdoc="<textarea id='t' style='width:400px'></textarea><div id='c' contenteditable='true' style='border:1px solid #999;min-height:20px'></div>"></iframe>
+<iframe id="blank" style="width:460px;height:80px"></iframe>
+<iframe id="same" style="width:460px;height:80px" src="frame.html"></iframe>
+<script>
+  // Zendesk/Intercom-style composer: a script-built about:blank iframe with an editable body.
+  const f = document.getElementById('blank');
+  const d = f.contentDocument;
+  d.open(); d.write('<!doctype html><body contenteditable="true" style="min-height:40px"></body>'); d.close();
+</script>
+</body></html>

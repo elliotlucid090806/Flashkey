@@ -1,0 +1,155 @@
+/* FlashKey — design tokens & base components shared by the popup and the Studio. */
+:root {
+  --paper: #f5f6f8;
+  --surface: #ffffff;
+  --surface-2: #eef0f3;
+  --ink: #1a1c22;
+  --graphite: #5e6472;
+  --faint: #8a909c;
+  --rule: #e2e4e9;
+  --rule-strong: #cfd3da;
+  --amber: #f2b01e;
+  --amber-soft: #fdf1d2;
+  --amber-ink: #5c3f00;
+  --danger: #c2372b;
+  --danger-soft: #fbe7e5;
+  --ok: #1f7a4d;
+  --ok-soft: #e1f3ea;
+  --focus: rgba(242, 176, 30, 0.45);
+  --key-edge: #c9cdd5;
+  --shadow-pop: 0 12px 32px rgba(20, 22, 28, 0.16), 0 1px 3px rgba(20, 22, 28, 0.08);
+  --radius-s: 6px;
+  --radius-m: 9px;
+  --font: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans", Cantarell, "Helvetica Neue", Arial, sans-serif;
+  --mono: ui-monospace, "SF Mono", "JetBrains Mono", "Cascadia Mono", Menlo, Consolas, "Liberation Mono", monospace;
+  color-scheme: light;
+}
+
+:root[data-theme="dark"] {
+  --paper: #13151a;
+  --surface: #1a1d24;
+  --surface-2: #22262e;
+  --ink: #e8eaee;
+  --graphite: #a0a6b2;
+  --faint: #737a87;
+  --rule: #2a2e37;
+  --rule-strong: #3a3f4a;
+  --amber: #ffc53d;
+  --amber-soft: #3a2f12;
+  --amber-ink: #ffd877;
+  --danger: #ff7b6e;
+  --danger-soft: #3b1d1a;
+  --ok: #5fd39a;
+  --ok-soft: #173126;
+  --focus: rgba(255, 197, 61, 0.4);
+  --key-edge: #0b0c0f;
+  --shadow-pop: 0 14px 36px rgba(0, 0, 0, 0.55), 0 1px 3px rgba(0, 0, 0, 0.4);
+  color-scheme: dark;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root[data-theme="system"] {
+    --paper: #13151a;
+    --surface: #1a1d24;
+    --surface-2: #22262e;
+    --ink: #e8eaee;
+    --graphite: #a0a6b2;
+    --faint: #737a87;
+    --rule: #2a2e37;
+    --rule-strong: #3a3f4a;
+    --amber: #ffc53d;
+    --amber-soft: #3a2f12;
+    --amber-ink: #ffd877;
+    --danger: #ff7b6e;
+    --danger-soft: #3b1d1a;
+    --ok: #5fd39a;
+    --ok-soft: #173126;
+    --focus: rgba(255, 197, 61, 0.4);
+    --key-edge: #0b0c0f;
+    --shadow-pop: 0 14px 36px rgba(0, 0, 0, 0.55), 0 1px 3px rgba(0, 0, 0, 0.4);
+    color-scheme: dark;
+  }
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body {
+  font: 13.5px/1.45 var(--font);
+  color: var(--ink);
+  background: var(--paper);
+  -webkit-font-smoothing: antialiased;
+}
+button, input, select, textarea { font: inherit; color: inherit; }
+:focus-visible { outline: none; box-shadow: 0 0 0 3px var(--focus); }
+[hidden] { display: none !important; }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+/* The signature element: a trigger drawn as a physical keycap. */
+.key {
+  display: inline-flex; align-items: center;
+  font: 600 12px/1 var(--mono);
+  color: var(--ink);
+  background: var(--surface);
+  border: 1px solid var(--rule-strong);
+  border-bottom: 3px solid var(--key-edge);
+  border-radius: 6px;
+  padding: 4px 7px 3px;
+  white-space: nowrap;
+  max-width: 100%;
+  overflow: hidden; text-overflow: ellipsis;
+}
+.key-lit { background: var(--amber); border-color: var(--amber); border-bottom-color: #b98200; color: #1a1c22; }
+:root[data-theme="dark"] .key-lit { border-bottom-color: #a77500; }
+
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+  height: 30px; padding: 0 12px;
+  border: 1px solid var(--rule-strong); border-radius: var(--radius-s);
+  background: var(--surface); color: var(--ink);
+  font-weight: 600; font-size: 12.5px; cursor: pointer; white-space: nowrap;
+}
+.btn:hover { background: var(--surface-2); }
+.btn:disabled { opacity: .5; cursor: default; }
+.btn-primary { background: var(--amber); border-color: var(--amber); color: #1a1c22; }
+.btn-primary:hover { background: var(--amber); filter: brightness(0.96); }
+.btn-ghost { background: transparent; border-color: transparent; }
+.btn-ghost:hover { background: var(--surface-2); }
+.btn-danger { color: var(--danger); }
+.btn-danger-solid { background: var(--danger); border-color: var(--danger); color: #fff; }
+.btn-icon { width: 30px; padding: 0; }
+.btn svg, .icon { width: 16px; height: 16px; flex: none; }
+
+.field { display: flex; flex-direction: column; gap: 5px; min-width: 0; }
+.field > span, .label { font-size: 12px; font-weight: 600; color: var(--graphite); }
+.input, .select, .textarea {
+  width: 100%; min-width: 0;
+  background: var(--surface); color: var(--ink);
+  border: 1px solid var(--rule-strong); border-radius: var(--radius-s);
+  padding: 6px 9px; outline: none;
+}
+.input, .select { height: 32px; }
+.textarea { resize: vertical; min-height: 120px; font: 13px/1.55 var(--font); }
+.input:focus, .select:focus, .textarea:focus { border-color: var(--amber); box-shadow: 0 0 0 3px var(--focus); }
+.input-key { font: 600 13px var(--mono); }
+.hint { font-size: 12px; color: var(--faint); }
+.warn { font-size: 12px; color: var(--danger); }
+
+.switch { position: relative; display: inline-flex; width: 34px; height: 20px; flex: none; }
+.switch input { position: absolute; inset: 0; opacity: 0; margin: 0; cursor: pointer; z-index: 1; }
+.switch span { position: absolute; inset: 0; border-radius: 999px; background: var(--rule-strong); transition: background .15s; }
+.switch span::after { content: ""; position: absolute; top: 3px; left: 3px; width: 14px; height: 14px; border-radius: 50%; background: #fff; box-shadow: 0 1px 2px rgba(0,0,0,.25); transition: transform .15s; }
+.switch input:checked + span { background: var(--amber); }
+.switch input:checked + span::after { transform: translateX(14px); }
+.switch input:focus-visible + span { box-shadow: 0 0 0 3px var(--focus); }
+
+.badge { display: inline-flex; align-items: center; gap: 4px; font-size: 11.5px; color: var(--graphite); background: var(--surface-2); border-radius: 999px; padding: 1px 8px; white-space: nowrap; }
+.toast {
+  position: fixed; left: 50%; bottom: 16px; transform: translateX(-50%);
+  background: var(--ink); color: var(--paper); border-radius: 8px; padding: 8px 12px;
+  font-weight: 600; font-size: 12.5px; box-shadow: var(--shadow-pop); z-index: 50;
+  display: flex; gap: 12px; align-items: center;
+}
+.toast button { background: none; border: 0; color: var(--amber); font-weight: 700; cursor: pointer; padding: 0; }
+.kbd { font: 11px/1 var(--mono); border: 1px solid var(--rule-strong); border-bottom-width: 2px; border-radius: 4px; padding: 2px 5px; color: var(--graphite); background: var(--surface); }
+
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }

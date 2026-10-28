@@ -1,0 +1,10 @@
+# dependencies (dev tooling only — the extension itself has none)
+node_modules
+# build output: `npm run package` recreates dist/flashkey-v*.zip
+dist/
+tests/fixtures/dist/
+# local noise
+*.log
+.DS_Store
+Thumbs.db
+*.tar.gz

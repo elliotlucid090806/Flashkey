@@ -1,0 +1,45 @@
+{
+  "name": "flashkey",
+  "version": "1.0.0",
+  "private": true,
+  "description": "A private, offline text expander for Chrome. The extension lives in ./flashkey and needs no build step; this file only holds the dev tooling.",
+  "author": "Elliot <legendsidleon1@gmail.com> (https://github.com/adultgamer123)",
+  "license": "MIT",
+  "homepage": "https://github.com/adultgamer123/Flashkey#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/adultgamer123/Flashkey.git"
+  },
+  "bugs": {
+    "url": "https://github.com/adultgamer123/Flashkey/issues"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "test": "node --test tests/unit/*.test.js",
+    "test:e2e": "node tests/e2e/run.js",
+    "test:all": "npm test && npm run test:e2e",
+    "icons": "python3 tools/make_icons.py",
+    "package": "node tools/package.js"
+  },
+  "devDependencies": {
+    "@lexical/history": "^0.21.0",
+    "@lexical/plain-text": "^0.21.0",
+    "@lexical/rich-text": "^0.21.0",
+    "esbuild": "^0.24.0",
+    "lexical": "^0.21.0",
+    "playwright": "^1.48.0",
+    "prosemirror-commands": "^1.7.2",
+    "prosemirror-example-setup": "^1.2.3",
+    "prosemirror-history": "^1.4.1",
+    "prosemirror-keymap": "^1.2.2",
+    "prosemirror-model": "^1.24.1",
+    "prosemirror-schema-basic": "^1.2.3",
+    "prosemirror-state": "^1.4.3",
+    "prosemirror-view": "^1.37.0",
+    "quill": "^2.0.3",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  }
+}

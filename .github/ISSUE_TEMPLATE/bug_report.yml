@@ -1,0 +1,48 @@
+name: Bug report
+description: A trigger didn't expand, expanded wrongly, or something else broke.
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to report this. **Please don't paste private snippet text**; a made-up example that shows the problem is perfect.
+  - type: input
+    id: site
+    attributes:
+      label: Website
+      description: Where it happened (for example mail.google.com, web.whatsapp.com). A URL without private paths is fine.
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: What you did
+      placeholder: |
+        1. Created a snippet ;hi → "Hello there"
+        2. Opened a new Gmail message and typed ";hi" then Space
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: What you expected, and what happened instead
+    validations:
+      required: true
+  - type: input
+    id: browser
+    attributes:
+      label: Browser and version
+      placeholder: Chrome 131 on Windows 11
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: FlashKey version
+      description: Shown on chrome://extensions
+      placeholder: 1.0.0
+  - type: textarea
+    id: extra
+    attributes:
+      label: Anything else
+      description: Screenshots, console errors, other extensions you run.

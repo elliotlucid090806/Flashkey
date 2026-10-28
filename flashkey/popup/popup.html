@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en" data-theme="system">
+<head>
+  <meta charset="utf-8">
+  <title>FlashKey</title>
+  <link rel="stylesheet" href="../shared/theme.css">
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <header class="bar">
+    <span class="brand"><span class="mark" id="mark"></span><b>FlashKey</b></span>
+    <label class="switch" title="Expand snippets everywhere">
+      <input id="enabled" type="checkbox" aria-label="Expand snippets everywhere">
+      <span></span>
+    </label>
+    <span class="spacer"></span>
+    <button id="theme" class="btn btn-ghost btn-icon" type="button"></button>
+    <button id="export" class="btn btn-ghost btn-icon" type="button" title="Export backup (JSON)" aria-label="Export backup"></button>
+    <button id="studio" class="btn btn-ghost btn-icon" type="button" title="Open FlashKey Studio" aria-label="Open FlashKey Studio"></button>
+  </header>
+
+  <div class="site" id="site" hidden>
+    <span class="site-host" id="site-host"></span>
+    <button id="pause" class="pill" type="button" aria-pressed="false"></button>
+  </div>
+  <div class="notice" id="notice" hidden></div>
+
+  <div class="search">
+    <span id="search-icon"></span>
+    <input id="q" type="search" placeholder="Search snippets" autocomplete="off" spellcheck="false" aria-label="Search snippets" aria-controls="list">
+  </div>
+
+  <ul id="list" class="list" role="listbox" aria-label="Snippets"></ul>
+
+  <form id="add" class="add" hidden>
+    <div class="add-row">
+      <label class="field add-trigger"><span>Trigger</span><input id="add-trigger" class="input input-key" placeholder=";thanks" autocomplete="off" spellcheck="false" required></label>
+      <label class="field"><span>Label</span><input id="add-label" class="input" placeholder="Thank-you reply" autocomplete="off"></label>
+    </div>
+    <label class="field"><span>Text</span><textarea id="add-body" class="textarea" rows="4" placeholder="Thanks so much, {input:Name}! I'll follow up by {date+3d:dddd}."></textarea></label>
+    <div class="add-row add-foot">
+      <label class="field"><span>Folder</span><select id="add-folder" class="select"></select></label>
+      <div class="add-actions">
+        <button type="button" id="add-cancel" class="btn btn-ghost">Cancel</button>
+        <button type="submit" class="btn btn-primary">Save snippet</button>
+      </div>
+    </div>
+    <p id="add-msg" class="warn" role="alert"></p>
+  </form>
+
+  <footer class="foot">
+    <button id="add-open" class="btn" type="button"></button>
+    <span class="hints"><span class="kbd">↵</span> copy <span class="kbd">⇧↵</span> insert</span>
+  </footer>
+
+  <div id="overlay" class="overlay" hidden></div>
+
+  <script src="../shared/matcher.js"></script>
+  <script src="../shared/variables.js"></script>
+  <script src="../shared/formats.js"></script>
+  <script src="../shared/storage.js"></script>
+  <script src="../shared/fillin.js"></script>
+  <script src="../shared/ui.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>

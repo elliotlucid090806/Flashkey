@@ -1,0 +1,70 @@
+{
+  "manifest_version": 3,
+  "name": "FlashKey — Fast, Free & Offline Text Expander",
+  "short_name": "FlashKey",
+  "version": "1.0.0",
+  "description": "Instant text expander & snippet manager. Zero limits, zero popups, zero login. Free 1-click JSON/CSV backup & import.",
+  "author": {
+    "email": "legendsidleon1@gmail.com"
+  },
+  "homepage_url": "https://github.com/adultgamer123/Flashkey",
+  "minimum_chrome_version": "116",
+  "icons": {
+    "16": "icons/icon16.png",
+    "32": "icons/icon32.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "action": {
+    "default_title": "FlashKey",
+    "default_popup": "popup/popup.html",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "32": "icons/icon32.png",
+      "48": "icons/icon48.png"
+    }
+  },
+  "options_page": "options/options.html",
+  "background": {
+    "service_worker": "background.js"
+  },
+  "permissions": [
+    "storage",
+    "unlimitedStorage",
+    "contextMenus",
+    "activeTab",
+    "offscreen"
+  ],
+  "optional_permissions": [
+    "clipboardRead"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "shared/matcher.js",
+        "shared/variables.js",
+        "shared/sanitize.js",
+        "shared/fillin.js",
+        "content/caret.js",
+        "content/insert.js",
+        "content/overlay.js",
+        "content.js"
+      ],
+      "run_at": "document_start",
+      "all_frames": true,
+      "match_about_blank": true,
+      "match_origin_as_fallback": true
+    }
+  ],
+  "commands": {
+    "_execute_action": {
+      "description": "Open the FlashKey popup"
+    }
+  },
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'none'; base-uri 'none'; frame-ancestors 'none'"
+  }
+}

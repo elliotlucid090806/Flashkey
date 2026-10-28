@@ -1,0 +1,313 @@
+<!doctype html>
+<html lang="en" data-theme="system">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>FlashKey Studio</title>
+  <link rel="icon" href="../icons/icon32.png">
+  <link rel="stylesheet" href="../shared/theme.css">
+  <link rel="stylesheet" href="options.css">
+</head>
+<body>
+<div class="app">
+  <aside class="side" aria-label="Library">
+    <div class="brand"><span class="mark"><span data-icon="bolt"></span></span><span><b>FlashKey</b> Studio</span></div>
+    <button id="new-snippet" class="btn btn-primary side-new" type="button"><span data-icon="plus"></span>New snippet</button>
+
+    <nav class="nav" aria-label="Snippets">
+      <button class="nav-item" data-nav="all" type="button"><span data-icon="list"></span><span class="nav-label">All snippets</span><span class="count" id="count-all">0</span></button>
+      <button class="nav-item" data-nav="pinned" type="button"><span data-icon="pin"></span><span class="nav-label">Pinned</span><span class="count" id="count-pinned">0</span></button>
+    </nav>
+
+    <div class="side-head"><span>Folders</span><button id="folder-add" class="btn btn-ghost btn-icon btn-mini" type="button" title="New folder" aria-label="New folder"><span data-icon="plus"></span></button></div>
+    <div id="folders" class="nav" role="list"></div>
+
+    <div class="side-head"><span>Tags</span></div>
+    <div id="tags" class="tags"></div>
+
+    <div class="side-head"><span>Tools</span></div>
+    <nav class="nav" aria-label="Tools">
+      <button class="nav-item" data-view="import" type="button"><span data-icon="upload"></span><span class="nav-label">Import &amp; backup</span></button>
+      <button class="nav-item" data-view="snapshots" type="button"><span data-icon="history"></span><span class="nav-label">Snapshots</span><span class="count" id="count-snaps">0</span></button>
+      <button class="nav-item" data-view="settings" type="button"><span data-icon="gear"></span><span class="nav-label">Settings &amp; excluded sites</span></button>
+    </nav>
+
+    <div class="side-foot" id="stats"></div>
+  </aside>
+
+  <main class="main">
+    <header class="top">
+      <h1 id="view-title">All snippets</h1>
+      <div class="top-actions">
+        <button id="top-export-json" class="btn" type="button"><span data-icon="download"></span>Export backup</button>
+        <button id="top-export-csv" class="btn" type="button">Export CSV</button>
+        <div class="seg" role="radiogroup" aria-label="Theme">
+          <button type="button" role="radio" data-theme-pick="light" title="Light" aria-label="Light theme"><span data-icon="sun"></span></button>
+          <button type="button" role="radio" data-theme-pick="dark" title="Dark" aria-label="Dark theme"><span data-icon="moon"></span></button>
+          <button type="button" role="radio" data-theme-pick="system" title="Match system" aria-label="Match system theme"><span data-icon="system"></span></button>
+        </div>
+      </div>
+    </header>
+
+    <div id="banners"></div>
+
+    <!-- ============================== Library ============================== -->
+    <section id="view-library" class="view library">
+      <div class="listpane">
+        <div class="toolbar">
+          <label class="searchbox"><span data-icon="search"></span><input id="search" type="search" placeholder="Search triggers, labels and text" aria-label="Search snippets" autocomplete="off" spellcheck="false"><span class="kbd">/</span></label>
+          <select id="sort" class="select" aria-label="Sort snippets">
+            <option value="used">Most used</option>
+            <option value="trigger">Trigger A–Z</option>
+            <option value="updated">Recently updated</option>
+            <option value="created">Recently created</option>
+          </select>
+        </div>
+        <div class="bulk" id="bulk" hidden>
+          <label class="check"><input type="checkbox" id="select-all" aria-label="Select all visible"></label>
+          <span id="bulk-count">0 selected</span>
+          <select id="bulk-move" class="select" aria-label="Move selected to folder"><option value="">Move to…</option></select>
+          <button class="btn" type="button" id="bulk-enable">Enable</button>
+          <button class="btn" type="button" id="bulk-disable">Disable</button>
+          <button class="btn" type="button" id="bulk-export">Export</button>
+          <button class="btn btn-danger" type="button" id="bulk-delete">Delete</button>
+          <button class="btn btn-ghost" type="button" id="bulk-clear">Clear</button>
+        </div>
+        <ul id="snippet-list" class="slist" role="listbox" aria-label="Snippets" aria-multiselectable="false"></ul>
+      </div>
+
+      <div class="editor" id="editor">
+        <div class="editor-empty" id="editor-empty">
+          <p class="empty-keys"><span class="key">;sig</span><span class="key">;date</span><span class="key">;meet</span></p>
+          <h2>Pick a snippet, or make a new one</h2>
+          <p class="hint">Type its trigger anywhere on the web and FlashKey swaps it for the full text. Nothing leaves this browser.</p>
+          <button class="btn btn-primary" type="button" id="editor-empty-new"><span data-icon="plus"></span>New snippet</button>
+        </div>
+
+        <form id="edit-form" class="edit" hidden autocomplete="off">
+          <div class="edit-head">
+            <label class="field trigger-field"><span>Trigger</span><input id="f-trigger" class="input input-key" placeholder=";thanks" spellcheck="false" required></label>
+            <label class="field"><span>Label</span><input id="f-label" class="input" placeholder="What is this snippet for?"></label>
+          </div>
+          <p class="warn" id="f-trigger-msg" role="alert"></p>
+
+          <div class="edit-row">
+            <label class="field"><span>Folder</span><select id="f-folder" class="select"></select></label>
+            <div class="field tags-field"><span id="f-tags-label">Tags</span>
+              <div class="chips" id="f-tags" aria-labelledby="f-tags-label"><input id="f-tag-input" class="chip-input" placeholder="Add tag, press Enter" aria-label="Add tag"></div>
+            </div>
+          </div>
+
+          <div class="body-head">
+            <div class="seg seg-text" role="radiogroup" aria-label="Text format">
+              <button type="button" role="radio" data-mode="plain">Plain text</button>
+              <button type="button" role="radio" data-mode="rich">Rich text</button>
+            </div>
+            <span class="hint" id="mode-hint">Plain text takes on the font of wherever you type it.</span>
+          </div>
+
+          <div class="rich-tools" id="rich-tools" hidden>
+            <button type="button" class="btn btn-ghost" data-cmd="bold" title="Bold (Ctrl+B)"><b>B</b></button>
+            <button type="button" class="btn btn-ghost" data-cmd="italic" title="Italic (Ctrl+I)"><i>I</i></button>
+            <button type="button" class="btn btn-ghost" data-cmd="underline" title="Underline (Ctrl+U)"><u>U</u></button>
+            <button type="button" class="btn btn-ghost" data-cmd="insertUnorderedList" title="Bulleted list">• List</button>
+            <button type="button" class="btn btn-ghost" data-cmd="insertOrderedList" title="Numbered list">1. List</button>
+            <button type="button" class="btn btn-ghost" data-cmd="createLink" title="Link">Link</button>
+            <button type="button" class="btn btn-ghost" data-cmd="removeFormat" title="Clear formatting">Clear</button>
+          </div>
+          <textarea id="f-body" class="textarea body-input" rows="8" placeholder="The text this trigger expands to"></textarea>
+          <div id="f-rich" class="textarea rich-input" contenteditable="true" role="textbox" aria-multiline="true" aria-label="Rich text" hidden></div>
+
+          <div class="pills" aria-label="Insert a variable">
+            <span class="hint">Insert</span>
+            <button type="button" class="pill-var" data-var="{cursor}" title="Caret lands here after expanding">{cursor}</button>
+            <button type="button" class="pill-var" data-var="{date}" title="Today's date">{date}</button>
+            <button type="button" class="pill-var" data-var="{date+7d}" title="Date one week from today">{date+7d}</button>
+            <button type="button" class="pill-var" data-var="{time}" title="Current time">{time}</button>
+            <button type="button" class="pill-var" data-var="{day}" title="Weekday name">{day}</button>
+            <button type="button" class="pill-var" data-var="{clipboard}" title="Whatever you last copied">{clipboard}</button>
+            <button type="button" class="pill-var" data-var="{input:Name}" title="Ask for a value when expanding">{input:Name}</button>
+            <button type="button" class="pill-var" data-var="{choice:Yes|No}" title="Pick one option when expanding">{choice:A|B}</button>
+            <button type="button" class="pill-var" data-var="{tab}" title="Jump to the next form field">{tab}</button>
+          </div>
+
+          <details class="advanced">
+            <summary>Matching options</summary>
+            <div class="adv-grid">
+              <label class="field"><span>Expand</span>
+                <select id="f-mode" class="select">
+                  <option value="">Use default</option>
+                  <option value="delimiter">After Space, Tab, Enter or punctuation</option>
+                  <option value="immediate">As soon as the trigger is typed</option>
+                </select></label>
+              <label class="field"><span>Letter case</span>
+                <select id="f-case" class="select">
+                  <option value="">Use default</option>
+                  <option value="false">Ignore case</option>
+                  <option value="true">Must match exactly</option>
+                </select></label>
+              <label class="toggle"><span class="switch"><input type="checkbox" id="f-enabled"><span></span></span>Enabled</label>
+              <label class="toggle"><span class="switch"><input type="checkbox" id="f-pinned"><span></span></span>Pinned</label>
+            </div>
+          </details>
+
+          <div class="sandbox" data-flashkey-sandbox>
+            <div class="sandbox-head"><span class="label">Try it</span><span class="hint" id="sandbox-hint">Type the trigger here — unsaved changes included.</span></div>
+            <textarea id="sandbox-text" class="textarea sandbox-input" rows="3" placeholder="Type your trigger here…" spellcheck="false"></textarea>
+            <div id="sandbox-rich" class="textarea sandbox-input sandbox-rich" contenteditable="true" role="textbox" aria-label="Rich text test box" data-placeholder="Rich-text box (like Gmail): type your trigger here…"></div>
+          </div>
+
+          <div class="edit-foot">
+            <span class="hint" id="f-meta"></span>
+            <span class="spacer"></span>
+            <button type="button" class="btn btn-ghost btn-danger" id="f-delete">Delete</button>
+            <button type="button" class="btn" id="f-duplicate">Duplicate</button>
+            <button type="submit" class="btn btn-primary" id="f-save">Save <span class="kbd kbd-in">Ctrl S</span></button>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <!-- =========================== Import & backup =========================== -->
+    <section id="view-import" class="view page" hidden>
+      <div class="panel">
+        <h2>Back up everything</h2>
+        <p class="hint">Your snippets live only in this browser. Download a copy whenever you like — it's always free.</p>
+        <div class="row-actions">
+          <button class="btn btn-primary" type="button" id="exp-json"><span data-icon="download"></span>Backup (.json)</button>
+          <button class="btn" type="button" id="exp-csv">Spreadsheet (.csv)</button>
+          <button class="btn" type="button" id="exp-ahk">AutoHotKey (.ahk)</button>
+          <span class="hint" id="last-backup"></span>
+        </div>
+      </div>
+
+      <div class="panel">
+        <h2>Import snippets</h2>
+        <p class="hint">FlashKey backups, Text Blaze, Magical, ProKeys and Auto Text Expander JSON, any CSV or TSV spreadsheet, and AutoHotKey hotstrings. You'll see a preview before anything changes.</p>
+        <div id="drop" class="drop" tabindex="0" role="button" aria-label="Choose a file to import">
+          <span data-icon="upload"></span>
+          <span><b>Drop a file here</b> or click to choose one</span>
+          <span class="hint">.json · .csv · .tsv · .txt · .ahk</span>
+          <input type="file" id="file" accept=".json,.csv,.tsv,.txt,.ahk,application/json,text/csv,text/plain" hidden>
+        </div>
+        <details class="paste">
+          <summary>Paste text instead</summary>
+          <textarea id="paste" class="textarea" rows="6" placeholder="Paste CSV rows, JSON, or AutoHotKey hotstrings like ::btw::by the way"></textarea>
+          <div class="row-actions">
+            <select id="paste-format" class="select" aria-label="Format">
+              <option value="auto">Detect format</option>
+              <option value="json">JSON</option>
+              <option value="csv">CSV</option>
+              <option value="tsv">TSV</option>
+              <option value="ahk">AutoHotKey</option>
+            </select>
+            <button class="btn" type="button" id="paste-go">Preview import</button>
+          </div>
+        </details>
+      </div>
+
+      <div class="panel" id="preview" hidden>
+        <h2 id="pv-title">Preview</h2>
+        <p id="pv-summary" class="pv-summary"></p>
+        <ul id="pv-warnings" class="pv-warnings"></ul>
+        <div id="pv-mapper" class="mapper" hidden></div>
+        <div class="pv-options">
+          <fieldset><legend>Mode</legend>
+            <label><input type="radio" name="pv-mode" value="merge" checked> Merge with my snippets</label>
+            <label><input type="radio" name="pv-mode" value="replace"> Replace all my snippets</label>
+          </fieldset>
+          <fieldset id="pv-conflict-set"><legend>When a trigger already exists</legend>
+            <label><input type="radio" name="pv-conflict" value="skip" checked> Skip it</label>
+            <label><input type="radio" name="pv-conflict" value="overwrite"> Overwrite mine</label>
+            <label><input type="radio" name="pv-conflict" value="keep"> Keep both (rename new)</label>
+          </fieldset>
+          <fieldset><legend>Folders</legend>
+            <label class="field"><select id="pv-folder" class="select"></select></label>
+            <label id="pv-settings-wrap" hidden><input type="checkbox" id="pv-settings"> Also restore settings from the backup</label>
+          </fieldset>
+        </div>
+        <div class="table-wrap"><table class="pv-table"><thead><tr><th>Trigger</th><th>Label</th><th>Text</th><th>Folder</th><th></th></tr></thead><tbody id="pv-rows"></tbody></table></div>
+        <div class="row-actions">
+          <button class="btn btn-primary" type="button" id="pv-commit">Import</button>
+          <button class="btn btn-ghost" type="button" id="pv-cancel">Cancel</button>
+          <span class="hint">A snapshot of your current library is saved first, so you can undo.</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================== Snapshots ============================== -->
+    <section id="view-snapshots" class="view page" hidden>
+      <div class="panel">
+        <h2>Safety snapshots</h2>
+        <p class="hint">FlashKey keeps your last 5 snapshots, saved automatically before imports, bulk deletes, deleting a folder and clearing your library. Restoring one saves your current library first.</p>
+        <div class="row-actions"><button class="btn" type="button" id="snap-now"><span data-icon="history"></span>Take a snapshot now</button></div>
+        <ul id="snap-list" class="snap-list"></ul>
+      </div>
+    </section>
+
+    <!-- =============================== Settings =============================== -->
+    <section id="view-settings" class="view page" hidden>
+      <div class="panel">
+        <h2>Expansion</h2>
+        <div class="set"><div><b>Expand snippets</b><p class="hint">Turn FlashKey off everywhere without uninstalling it.</p></div><span class="switch"><input type="checkbox" id="s-enabled" aria-label="Expand snippets"><span></span></span></div>
+        <div class="set"><div><b>When to expand</b><p class="hint">“After a delimiter” keeps <span class="key">;date</span> from firing while you're still typing <span class="key">;datetime</span>.</p></div>
+          <select id="s-mode" class="select set-select"><option value="delimiter">After Space, Tab, Enter or punctuation</option><option value="immediate">As soon as the trigger is typed</option></select></div>
+        <div class="set"><div><b>Keep the Space or punctuation</b><p class="hint">Re-type the character that triggered the expansion. Enter and Tab are never re-sent, so chat apps don't send early.</p></div><span class="switch"><input type="checkbox" id="s-keep" aria-label="Keep the delimiter"><span></span></span></div>
+        <div class="set"><div><b>Match letter case exactly</b><p class="hint">Off means <span class="key">;SIG</span> works with Caps Lock on.</p></div><span class="switch"><input type="checkbox" id="s-case" aria-label="Match letter case exactly"><span></span></span></div>
+        <div class="set"><div><b>Expand inside words</b><p class="hint">Useful for character replacements in other languages. Off means a trigger needs a space or punctuation before it.</p></div><span class="switch"><input type="checkbox" id="s-inside" aria-label="Expand inside words"><span></span></span></div>
+        <div class="set"><div><b>Quick picker</b><p class="hint">Press <span class="kbd">Ctrl</span> <span class="kbd">Shift</span> <span class="kbd">Space</span> in a text box to search and insert a snippet. Nothing ever appears unless you press it.</p></div><span class="switch"><input type="checkbox" id="s-picker" aria-label="Quick picker"><span></span></span></div>
+      </div>
+
+      <div class="panel">
+        <h2>Dates &amp; times</h2>
+        <div class="set-grid">
+          <label class="field"><span>Default {date} format</span><input id="s-datefmt" class="input" placeholder="Browser default"></label>
+          <label class="field"><span>Default {time} format</span><input id="s-timefmt" class="input" placeholder="Browser default"></label>
+          <label class="field"><span>Language for month &amp; day names</span><input id="s-locale" class="input" placeholder="Browser default (e.g. en-IN)"></label>
+        </div>
+        <p class="hint">Tokens: YYYY YY · MMMM MMM MM M · DD D Do · dddd ddd · HH hh mm ss A. Example now: <span id="s-date-example" class="mono"></span></p>
+      </div>
+
+      <div class="panel">
+        <h2>Excluded sites</h2>
+        <p class="hint">FlashKey never touches password, one-time-code or card-number fields anywhere. Add sites where it should stay off completely. Wildcards work: <span class="mono">*.chase.com</span>, <span class="mono">*.bank.*</span>, <span class="mono">localhost:*</span>.</p>
+        <form id="block-form" class="row-actions"><input id="block-input" class="input" placeholder="example.com" aria-label="Site to exclude" style="max-width:280px"><button class="btn" type="submit">Exclude site</button></form>
+        <ul id="block-list" class="block-list"></ul>
+      </div>
+
+      <div class="panel">
+        <h2>Clipboard &amp; privacy</h2>
+        <div class="set"><div><b>Allow {clipboard}</b><p class="hint" id="clip-status">Lets snippets paste what you last copied. Chrome asks you once.</p></div><button class="btn" type="button" id="clip-grant">Allow</button></div>
+        <div class="set"><div><b>Backup reminder</b><p class="hint">A quiet note on this page when your last backup is more than 30 days old.</p></div><span class="switch"><input type="checkbox" id="s-reminder" aria-label="Backup reminder"><span></span></span></div>
+        <p class="hint">No account, no servers, no tracking. FlashKey makes zero network requests.</p>
+      </div>
+
+      <div class="panel danger-zone">
+        <h2>Delete all snippets</h2>
+        <p class="hint">A snapshot is saved first, so you can restore everything from Snapshots.</p>
+        <div class="row-actions"><button class="btn btn-danger" type="button" id="clear-all">Delete all snippets…</button></div>
+      </div>
+    </section>
+  </main>
+</div>
+
+<div id="modal" class="modal" hidden></div>
+
+<script src="sandbox-config.js"></script>
+<script src="../shared/matcher.js"></script>
+<script src="../shared/variables.js"></script>
+<script src="../shared/formats.js"></script>
+<script src="../shared/storage.js"></script>
+<script src="../shared/sanitize.js"></script>
+<script src="../shared/fillin.js"></script>
+<script src="../shared/ui.js"></script>
+<script src="../content/caret.js"></script>
+<script src="../content/insert.js"></script>
+<script src="../content/overlay.js"></script>
+<script src="../content.js"></script>
+<script src="studio.js"></script>
+<script src="library.js"></script>
+<script src="importer.js"></script>
+<script src="settings.js"></script>
+</body>
+</html>
